@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ThrowItem
+  - CollectableCube
+  - Collectable
+  - Bullet
+  - Weapon
+  - CollectableWeapon
+  - Enemy
+  - PodiumEnemy
   layers:
   - Default
   - TransparentFX

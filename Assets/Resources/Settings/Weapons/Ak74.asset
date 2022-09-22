@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c96d4d11a64226bf0fe0f1eebe5133, type: 3}
+  m_Name: Ak74
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7846218350174630801, guid: d326ed5d8c743974abbadb144f654bfe, type: 3}
+  bullet: {fileID: 8847475190350954528, guid: 98fe1bf9747eb8a438ed80ab8ec6b7ce, type: 3}
+  settings:
+  - directions:
+    - position: {x: 0, y: 1, z: 0}
+      direction: {x: 0, y: 0, z: 1}
+  - directions:
+    - position: {x: -0.25, y: 1, z: 0}
+      direction: {x: 0, y: 0, z: 1}
+    - position: {x: 0.25, y: 1, z: 0}
+      direction: {x: 0, y: 0, z: 1}
+  - directions:
+    - position: {x: -0.2, y: 1, z: 0}
+      direction: {x: -0.3, y: 0, z: 1}
+    - position: {x: 0, y: 1, z: 1}
+      direction: {x: 0, y: 0, z: 1}
+    - position: {x: 0.2, y: 1, z: 0}
+      direction: {x: 0.3, y: 0, z: 1}
+  fireRate: 0.05
+  position: {x: -0.05, y: 0, z: 0}
+  rotation: {x: -20, y: -90, z: 0}
+  scale: {x: 0.75, y: 0.75, z: 0.75}

@@ -20,7 +20,7 @@ MonoBehaviour:
   - type: 0
     title: Fire Rate
     text: +{0}
-    multiplier: 10000
+    multiplier: 100
     imageDoor: 0
     image: {fileID: 0}
   - type: 1
@@ -68,12 +68,12 @@ MonoBehaviour:
   - type: 8
     title: Distance
     text: +{0}
-    multiplier: 10000
+    multiplier: 100
     imageDoor: 0
     image: {fileID: 0}
   - type: 9
     title: Distance
     text: -{0}
-    multiplier: 10000
+    multiplier: 100
     imageDoor: 0
     image: {fileID: 0}

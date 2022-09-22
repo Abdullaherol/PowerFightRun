@@ -12,18 +12,18 @@ public class Collectable : MonoBehaviour
     public TMPro.TextMeshProUGUI text;
     public Animator animator;
     public Transform itemParent;
-    
+
     void Start()
     {
-        text.text = health.ToString(); 
-        itemParent.GetComponent<Animator>().Play("CollectableWeapon",-1,Random.value);
+        text.text = health.ToString();
+        itemParent.GetComponent<Animator>().Play("CollectableWeapon", -1, Random.value);
     }
 
     private void Update()
     {
-        if(Application.isPlaying) return;
-        
-        text.text = health.ToString(); 
+        if (Application.isPlaying) return;
+
+        text.text = health.ToString();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,12 +44,16 @@ public class Collectable : MonoBehaviour
             else
             {
                 health -= bullet.damage;
-                Destroy(bullet.gameObject);
-                
+
                 animator.Play("Damage");
             }
+
+            bullet.particle.transform.parent = null;
+            bullet.particle.Play();
             
-            text.text = health.ToString(); 
+            Destroy(bullet.gameObject);
+            
+            text.text = health.ToString();
         }
     }
 

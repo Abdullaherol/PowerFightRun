@@ -5,7 +5,9 @@ public class Player : MonoBehaviour
     public Transform weaponParent;
     public GameObject currentWeapon;
     public ThrowWeapon weapon;
-
+    public ParticleSystem particleChangeWeapon;
+    public Animator animator;
+    
     public void ChangeWeapon(ThrowWeapon throwWeapon)
     {
         if (currentWeapon != null)
@@ -14,6 +16,9 @@ public class Player : MonoBehaviour
                 Destroy(currentWeapon);
             else return;
         }
+        
+        particleChangeWeapon.Play();
+        animator.Play("ChangeWeapon");
 
         var weaponTransform = Instantiate(throwWeapon.prefab).transform;
         

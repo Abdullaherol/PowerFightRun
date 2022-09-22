@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     public TMPro.TextMeshProUGUI text;
     public Animator animator;
     public GameObject money;
+    public ParticleSystem particleDead;
+    public ParticleSystem particleDestroy;
 
     void Start()
     {
@@ -22,14 +24,11 @@ public class Enemy : MonoBehaviour
 
             if (health - bullet.damage <= 0)
             {
-                money.transform.parent = null;
-                money.GetComponent<BoxCollider>().isTrigger = false;
-                money.GetComponent<Rigidbody>().useGravity = true;
-                money.transform.eulerAngles = Vector3.zero;
-                money.SetActive(true);
-                
                 animator.Play("Dead");
 
+                particleDead.transform.parent = null;
+                particleDead.Play();
+                
                 this.enabled = false;
 
                 StartCoroutine(DeleteEnemey());
@@ -75,6 +74,16 @@ public class Enemy : MonoBehaviour
 
             skinnedMeshRenderer.materials = materials;
         }
+
+        particleDestroy.transform.parent = null;
+        particleDestroy.Play();
+        
+        money.transform.parent = null;
+        money.GetComponent<BoxCollider>().isTrigger = false;
+        money.GetComponent<Rigidbody>().useGravity = true;
+        money.transform.eulerAngles = Vector3.zero;
+        money.SetActive(true);
+        
         Destroy(gameObject);
     }
 }

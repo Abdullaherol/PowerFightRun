@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Random = UnityEngine.Random;
 
+[ExecuteInEditMode]
 public class Collectable : MonoBehaviour
 {
     public int health;
@@ -17,7 +18,14 @@ public class Collectable : MonoBehaviour
         text.text = health.ToString(); 
         itemParent.GetComponent<Animator>().Play("CollectableWeapon",-1,Random.value);
     }
-    
+
+    private void Update()
+    {
+        if(Application.isPlaying) return;
+        
+        text.text = health.ToString(); 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Bullet"))

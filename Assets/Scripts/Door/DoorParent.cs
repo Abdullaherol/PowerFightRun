@@ -5,7 +5,7 @@ using UnityEditor.SceneManagement;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+[ExecuteInEditMode]
 public class DoorParent : MonoBehaviour
 {
     [Header("Left")] public DoorChild leftDoor;
@@ -30,6 +30,16 @@ public class DoorParent : MonoBehaviour
 
     public void RefreshDoor(DoorManager doorManager)
     {
+        RefreshChild(leftDoor,leftType,leftValue,doorManager);
+        RefreshChild(rightDoor,rightType,rightValue,doorManager);
+    }
+
+    private void Update()
+    {
+        if(Application.isPlaying) return;
+
+        var doorManager = GameObject.FindObjectOfType<DoorManager>();
+        
         RefreshChild(leftDoor,leftType,leftValue,doorManager);
         RefreshChild(rightDoor,rightType,rightValue,doorManager);
     }

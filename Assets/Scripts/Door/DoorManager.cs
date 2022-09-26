@@ -56,7 +56,7 @@ public class DoorManager : MonoBehaviour
     public Color GetBodyColor(DoorType type)
     {
         return (type == DoorType.ChangeWeapon || type == DoorType.IncreaseBullet || type == DoorType.IncreasePlayer ||
-                type == DoorType.IncreaseFireRate)
+                type == DoorType.IncreaseFireRate || type == DoorType.IncreaseDistance)
             ? doorSetting.increaseBodyColor
             : doorSetting.DecreaseBodyColor;
     }

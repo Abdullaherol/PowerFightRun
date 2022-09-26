@@ -48,7 +48,7 @@ public class DoorManager : MonoBehaviour
     public Material GetMaterial(DoorType type)
     {
         return (type == DoorType.ChangeWeapon || type == DoorType.IncreaseBullet || type == DoorType.IncreasePlayer ||
-                type == DoorType.IncreaseFireRate)
+                type == DoorType.IncreaseFireRate || type == DoorType.IncreaseDistance)
             ? doorSetting.increaseMaterial
             : doorSetting.decreaseMaterial;
     }

@@ -9,5 +9,6 @@
     IncreasePlayer,
     DecreasePlayer,
     IncreaseDistance,
-    DecreaseDistance
+    DecreaseDistance,
+    Boost
 }

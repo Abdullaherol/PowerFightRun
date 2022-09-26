@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ThrowManager : MonoBehaviour
 {
@@ -38,13 +39,15 @@ public class ThrowManager : MonoBehaviour
         
         if(currentWeapon==null) return;
 
-        if (_currentTime < upgrade.fireRate)
+        var boostValue = BoostManager.Instance.boostValue;
+
+        if (_currentTime < upgrade.fireRate + boostValue.fireRate)
         {
             _currentTime += Time.deltaTime;
         }
         else
         {
-            if (upgrade.bulletCount >= currentWeapon.settings.Count)
+            if (upgrade.bulletCount + boostValue.bullet >= currentWeapon.settings.Count)
                 upgrade.bulletCount = currentWeapon.settings.Count;
             else if(upgrade.bulletCount < 1)
                 upgrade.bulletCount = 1;
@@ -59,7 +62,7 @@ public class ThrowManager : MonoBehaviour
                     var spawnPoint = position + weaponDirection.position;
                     var bullet = Instantiate(currentWeapon.bullet);
                     bullet.transform.position = spawnPoint;
-                    bullet.transform.LookAt(spawnPoint + weaponDirection.direction);
+                    bullet.transform.LookAt(spawnPoint + weaponDirection.direction + new Vector3(Random.Range(-currentWeapon.spread,currentWeapon.spread),0,0));
                 }
             }
             _currentTime = 0;
@@ -104,6 +107,15 @@ public class ThrowManager : MonoBehaviour
         RefreshUpgrade();
         
         _playerManager.UpdatePlayersWeapons(weapon.weapon);
+    }
+    
+    public void ChangeWeapon(ThrowWeapon weapon)
+    {
+        currentWeapon = weapon;
+
+        RefreshUpgrade();
+        
+        _playerManager.UpdatePlayersWeapons(weapon);
     }
 
     private void RefreshUpgrade()

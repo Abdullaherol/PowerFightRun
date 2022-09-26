@@ -39,10 +39,10 @@ public class PlayerManager : MonoBehaviour
             playerPool.Add(player);
         }
 
-        IncreasePlayer();
+        IncreasePlayer(true);
     }
 
-    public void IncreasePlayer()
+    public void IncreasePlayer(bool playParticle)
     {
         var player = playerPool[^1];
 
@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
 
         players.Add(player);
         
-        player.GetComponent<Player>().ChangeWeapon(ThrowManager.Instance.currentWeapon);
+        player.GetComponent<Player>().ChangeWeapon(ThrowManager.Instance.currentWeapon,playParticle);
 
         _currentTime = 0;
 
@@ -76,7 +76,7 @@ public class PlayerManager : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             var player = players[i];
-            var animator = player.GetComponent<Animator>();
+            var animator = player.GetComponent<Player>().animatorCharacter;
             animator.Play(anim);
         }
     }
@@ -128,7 +128,7 @@ public class PlayerManager : MonoBehaviour
             var p = players[i];
             var player = p.GetComponent<Player>();
             
-            player.ChangeWeapon(weapon);
+            player.ChangeWeapon(weapon,true);
         }
     }
 }

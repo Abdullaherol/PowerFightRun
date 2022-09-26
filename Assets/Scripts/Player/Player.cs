@@ -6,22 +6,25 @@ public class Player : MonoBehaviour
     public GameObject currentWeapon;
     public ThrowWeapon weapon;
     public ParticleSystem particleChangeWeapon;
-    public Animator animator;
-    
-    public void ChangeWeapon(ThrowWeapon throwWeapon)
+    public Animator animatorParent;
+    public Animator animatorCharacter;
+
+    public void ChangeWeapon(ThrowWeapon throwWeapon, bool playParticle)
     {
         if (currentWeapon != null)
         {
-            if(weapon != throwWeapon)
+            if (weapon != throwWeapon)
                 Destroy(currentWeapon);
             else return;
         }
+
+        if (playParticle)
+            particleChangeWeapon.Play();
         
-        particleChangeWeapon.Play();
-        animator.Play("ChangeWeapon");
+        animatorParent.Play("ChangeWeapon");
 
         var weaponTransform = Instantiate(throwWeapon.prefab).transform;
-        
+
         weaponTransform.parent = weaponParent;
         weaponTransform.localPosition = throwWeapon.position;
         weaponTransform.localEulerAngles = throwWeapon.rotation;

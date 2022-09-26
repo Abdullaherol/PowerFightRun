@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +23,8 @@ public class GameManager : MonoBehaviour
     private MoneyText _moneyText;
     private LevelCompletedUI _levelCompletedUI;
 
+    private List<ThrowWeapon> _weapons = new List<ThrowWeapon>();
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
@@ -27,6 +32,18 @@ public class GameManager : MonoBehaviour
         Instance = this;
         
         GetSettings();
+    }
+
+    private void GetWeaponsFromAssets()
+    {
+        _weapons = Resources.LoadAll<ThrowWeapon>("Weapons").ToList();
+    }
+
+    public ThrowWeapon GetRandomWeapon(ThrowWeapon currentWeapon)
+    {
+        List<ThrowWeapon> weapons = new List<ThrowWeapon>(_weapons);
+        weapons.Remove(currentWeapon);
+        return weapons[Random.Range(0, weapons.Count)];
     }
 
     private void Start()

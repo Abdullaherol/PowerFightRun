@@ -5,14 +5,22 @@ using UnityEditor.SceneManagement;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 [ExecuteInEditMode]
 public class DoorParent : MonoBehaviour
 {
+    //Left
     [Header("Left")] public DoorChild leftDoor;
     public DoorType leftType;
+    public DoorBoostType leftBoostType;
+    public ThrowWeapon leftWeapon;
     public float leftValue;
+
+    //Right
     [Space, Header("Right")] public DoorChild rightDoor;
     public DoorType rightType;
+    public DoorBoostType rightBoostType;
+    public ThrowWeapon rightWeapon;
     public float rightValue;
 
     private bool used;
@@ -30,33 +38,33 @@ public class DoorParent : MonoBehaviour
 
     public void RefreshDoor(DoorManager doorManager)
     {
-        RefreshChild(leftDoor,leftType,leftValue,doorManager);
-        RefreshChild(rightDoor,rightType,rightValue,doorManager);
+        RefreshChild(leftDoor, leftType, leftValue, doorManager);
+        RefreshChild(rightDoor, rightType, rightValue, doorManager);
     }
 
     private void Update()
     {
-        if(Application.isPlaying) return;
+        if (Application.isPlaying) return;
 
         var doorManager = GameObject.FindObjectOfType<DoorManager>();
-        
-        RefreshChild(leftDoor,leftType,leftValue,doorManager);
-        RefreshChild(rightDoor,rightType,rightValue,doorManager);
+
+        RefreshChild(leftDoor, leftType, leftValue, doorManager);
+        RefreshChild(rightDoor, rightType, rightValue, doorManager);
     }
 
-    private void RefreshChild(DoorChild child,DoorType type,float value,DoorManager doorManager)
+    private void RefreshChild(DoorChild child, DoorType type, float value, DoorManager doorManager)
     {
-        if(child == null || doorManager == null) return;
-        
+        if (child == null || doorManager == null) return;
+
         var doorImage = doorManager.IsImageDoor(type);
         var multiplier = doorManager.GetMultiplier(type);
-            
-       child.title.text = doorManager.GetTitle(type);
-       child.text.text = (doorImage) ? "" : string.Format(doorManager.GetTypeText(type), value * multiplier);
-       child.meshRenderer.material = doorManager.GetMaterial(type);
-       child.bodyImage.color = (doorImage) ? Color.clear : doorManager.GetBodyColor(type);
-       child.image.sprite = (doorImage) ? doorManager.GetImageDoorSprite(type) : null;
-       child.image.color = (doorImage) ? Color.white : Color.clear;
+
+        child.title.text = doorManager.GetTitle(type);
+        child.text.text = (doorImage) ? "" : string.Format(doorManager.GetTypeText(type), value * multiplier);
+        child.meshRenderer.material = doorManager.GetMaterial(type);
+        child.bodyImage.color = (doorImage) ? Color.clear : doorManager.GetBodyColor(type);
+        child.image.sprite = (doorImage) ? doorManager.GetImageDoorSprite(type) : null;
+        child.image.color = (doorImage) ? Color.white : Color.clear;
     }
 
     public void Trigger(DoorChild child)
@@ -88,6 +96,8 @@ public class DoorParent : MonoBehaviour
 
         var type = (left) ? leftType : rightType;
         var value = (left) ? leftValue : rightValue;
+        var weapon = (left) ? leftWeapon : rightWeapon;
+        var boostType = (left) ? leftBoostType : rightBoostType;
 
         if (type == DoorType.IncreaseFireRate)
         {
@@ -103,17 +113,24 @@ public class DoorParent : MonoBehaviour
         }
         else if (type == DoorType.ChangeWeapon)
         {
+            ThrowManager.Instance.ChangeWeapon(weapon);
         }
         else if (type == DoorType.RandomWeapon)
         {
+            var randomWeapon = GameManager.Instance.GetRandomWeapon(ThrowManager.Instance.currentWeapon);
+            ThrowManager.Instance.ChangeWeapon(randomWeapon);
         }
         else if (type == DoorType.IncreasePlayer)
         {
-            PlayerManager.Instance.IncreasePlayer();
+            PlayerManager.Instance.IncreasePlayer(true);
         }
         else if (type == DoorType.DecreasePlayer)
         {
             PlayerManager.Instance.DecreasePlayer();
+        }
+        else if (type == DoorType.Boost)
+        {
+            BoostManager.Instance.Boost(boostType,value);
         }
 
         DeActivateDoors();

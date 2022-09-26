@@ -8,7 +8,6 @@ public class ThrowBullet : MonoBehaviour
     public int damage;
     public float speed;
     public float time;
-    public ParticleSystem particle;
 
     private float _currentTime;
     

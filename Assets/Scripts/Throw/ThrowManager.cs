@@ -16,6 +16,8 @@ public class ThrowManager : MonoBehaviour
     public ThrowWeapon currentWeapon;
     public ThrowUpgrade upgrade;
 
+    [Space, Header("Bullet")] public ParticleSystem bulletCollisionParticle;
+
     private float _currentTime;
     private bool _shot;
 

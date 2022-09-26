@@ -48,8 +48,11 @@ public class Collectable : MonoBehaviour
                 animator.Play("Damage");
             }
 
-            bullet.particle.transform.parent = null;
-            bullet.particle.Play();
+            var particlePos = other.ClosestPoint(bullet.transform.position);
+
+            var particle = Instantiate(ThrowManager.Instance.bulletCollisionParticle).GetComponent<ParticleSystem>();
+            particle.transform.position = particlePos;
+            particle.Play();
             
             Destroy(bullet.gameObject);
             

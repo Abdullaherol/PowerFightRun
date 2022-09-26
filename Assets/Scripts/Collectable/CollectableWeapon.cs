@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CollectableWeapon : MonoBehaviour
 {
-    public ParticleSystem particle;
     public ThrowWeapon weapon;
 
     private void OnCollisionEnter(Collision other)
@@ -16,6 +15,8 @@ public class CollectableWeapon : MonoBehaviour
 
         if (other.transform.CompareTag("Ground"))
         {
+            var particle = Instantiate(GameManager.Instance.collectableGroundParticle).GetComponent<ParticleSystem>();
+            particle.transform.position = transform.position;
             particle.Play();
         }
     }

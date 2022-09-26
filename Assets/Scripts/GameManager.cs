@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public Gradient enemyDeadGradient;
 
     [Space, Header("Money Settings")] public int eachMoneyValue;
+
+    [Space, Header("Collectable Settings")]
+    public ParticleSystem collectableGroundParticle;
     
     private GameOverUI _gameOverUI;
     private MoneyText _moneyText;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(TMPro.TextMeshProUGUI))]
 public class MoneyText : MonoBehaviour

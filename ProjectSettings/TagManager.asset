@@ -12,6 +12,7 @@ TagManager:
   - CollectableWeapon
   - Enemy
   - PodiumEnemy
+  - Ground
   layers:
   - Default
   - TransparentFX

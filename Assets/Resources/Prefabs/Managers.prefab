@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCount: 0
-  prefab: {fileID: 5006394516255322916, guid: 24c11e3303236914cb8d12a8e561a2a2, type: 3}
+  prefab: {fileID: 8068758753019593046, guid: 44d3ef07d3c1a6a4383231066c1a623a, type: 3}
   moveParent: {fileID: 0}
   moveTime: 1
   playerPositions:

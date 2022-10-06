@@ -16,14 +16,22 @@ MonoBehaviour:
   bullet: {fileID: 3689266630526338655, guid: 2b24560e6d7ef604695db8d26e12e30d, type: 3}
   settings:
   - directions:
-    - position: {x: 0, y: 0, z: 0}
+    - position: {x: 0, y: 1.5, z: 0}
       direction: {x: 0, y: 0, z: 1}
   - directions:
-    - position: {x: -0.25, y: 0, z: 0}
+    - position: {x: -0.25, y: 1.5, z: 0}
       direction: {x: 0, y: 0, z: 1}
-    - position: {x: 0.25, y: 0, z: 0}
+    - position: {x: 0.25, y: 1.5, z: 0}
+      direction: {x: 0, y: 0, z: 1}
+  - directions:
+    - position: {x: -0.3, y: 1.5, z: 0}
+      direction: {x: 0, y: 0, z: 1}
+    - position: {x: 0, y: 1.5, z: 0}
+      direction: {x: 0, y: 0, z: 1}
+    - position: {x: 0.3, y: 1.5, z: 0}
       direction: {x: 0, y: 0, z: 1}
   fireRate: 0.2
-  position: {x: 0.1, y: 0, z: 0}
-  rotation: {x: 0, y: -90, z: 90}
+  spread: 0
+  position: {x: 0.02, y: 0.12, z: 0}
+  rotation: {x: -47, y: -90, z: 90}
   scale: {x: 0.5, y: 0.5, z: 0.5}

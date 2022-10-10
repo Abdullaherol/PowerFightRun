@@ -20,7 +20,7 @@ MonoBehaviour:
   - type: 0
     title: Fire Rate
     text: +{0}
-    multiplier: 100
+    multiplier: 10000
     imageDoor: 0
     image: {fileID: 0}
   - type: 1

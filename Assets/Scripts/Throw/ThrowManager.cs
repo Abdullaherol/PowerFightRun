@@ -106,6 +106,8 @@ public class ThrowManager : MonoBehaviour
     {
         currentWeapon = weapon.weapon;
 
+        _currentTime = weapon.weapon.fireRate;
+
         RefreshUpgrade();
         
         _playerManager.UpdatePlayersWeapons(weapon.weapon);

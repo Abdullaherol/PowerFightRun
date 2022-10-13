@@ -12,7 +12,37 @@ ModelImporter:
   - first:
       74: -8945691123924629249
     second: Armature|Idle
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glasses
+    second: {fileID: 2100000, guid: 657fb7fff42efbe4bb38096f6a78b2db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: 7fba27c83fd36534faf9956b4e9e9668, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: 43745409e0745824bb88f221edcc8f12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "k\u0131l\u0131\xE7"
+    second: {fileID: 2100000, guid: 810971403c3add2448f27466c78cfaa8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: sapkoyu
+    second: {fileID: 2100000, guid: e2c1eb964f556f24e90fb0ce5ab38ce9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "sapsar\u0131"
+    second: {fileID: 2100000, guid: 205580a2da1c5204eb0553a8581dceb0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

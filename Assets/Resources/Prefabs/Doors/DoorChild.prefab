@@ -377,7 +377,6 @@ MonoBehaviour:
   title: {fileID: 7394547168386037163}
   text: {fileID: 9202981811820010426}
   bodyImage: {fileID: 2744343063817578728}
-  imageDoor: 0
   image: {fileID: 8162760247169355129}
 --- !u!1 &7394547167898001075
 GameObject:
@@ -441,7 +440,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e0dc2da234c134149a84f6966eaa75a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -774,7 +773,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e0dc2da234c134149a84f6966eaa75a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

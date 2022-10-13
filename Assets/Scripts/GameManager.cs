@@ -136,6 +136,6 @@ public class GameManager : MonoBehaviour
         if (onPodium)
             _currentTimePodium += Time.deltaTime;
 
-        Debug.Log("Total: "+_currentTimePodium.ToString("F")+"  Podium: "+_currentTimePodium.ToString("F"));
+        Debug.Log("Total: "+_currentTimeTotal.ToString("F")+"  Podium: "+_currentTimePodium.ToString("F"));
     }
 }

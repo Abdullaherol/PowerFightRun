@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        var enemyTag = gameObject.tag;
+        
         if (other.CompareTag("Bullet"))
         {
             ThrowBullet bullet = other.GetComponent<ThrowBullet>();
@@ -43,11 +45,14 @@ public class Enemy : MonoBehaviour
             }
 
             text.text = health.ToString();
+
+            if (enemyTag == "PodiumEnemy")
+            {
+                GameManager.Instance.onPodium = true;
+            } 
         }
 
         if (!other.CompareTag("Player")) return;
-
-        var enemyTag = gameObject.tag;
 
         if (enemyTag == "Enemy")
         {
@@ -55,8 +60,6 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyTag == "PodiumEnemy")
         {
-            GameManager.Instance.onPodium = true;
-            
             GameManager.Instance.LevelCompleted();
         }
     }

@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - PodiumEnemy
   - Ground
+  - PodiumParticle
   layers:
   - Default
   - TransparentFX

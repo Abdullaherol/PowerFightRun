@@ -34,13 +34,13 @@ MonoBehaviour:
     text: +{0}
     multiplier: 1
     imageDoor: 1
-    image: {fileID: 21300000, guid: 28423a7d6b252f746b0e77fc5362ee65, type: 3}
+    image: {fileID: 21300000, guid: fb129e820a56ea24fb15d39962bdbfd1, type: 3}
   - type: 3
     title: Bullet
     text: -{0}
     multiplier: 1
     imageDoor: 1
-    image: {fileID: 21300000, guid: 28423a7d6b252f746b0e77fc5362ee65, type: 3}
+    image: {fileID: 21300000, guid: fb129e820a56ea24fb15d39962bdbfd1, type: 3}
   - type: 4
     title: Weapon
     text: '{0}'
@@ -58,13 +58,13 @@ MonoBehaviour:
     text: +{0}
     multiplier: 1
     imageDoor: 1
-    image: {fileID: 21300000, guid: 28423a7d6b252f746b0e77fc5362ee65, type: 3}
+    image: {fileID: 21300000, guid: 84f53f0173282174daaf987ed3df8b87, type: 3}
   - type: 7
     title: Player
     text: -{0}
     multiplier: 1
     imageDoor: 1
-    image: {fileID: 21300000, guid: 28423a7d6b252f746b0e77fc5362ee65, type: 3}
+    image: {fileID: 21300000, guid: 84f53f0173282174daaf987ed3df8b87, type: 3}
   - type: 8
     title: Distance
     text: +{0}

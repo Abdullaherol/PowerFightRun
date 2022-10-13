@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [SelectionBase]
@@ -60,6 +61,15 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyTag == "PodiumEnemy")
         {
+            var podiumParticle = GameObject.FindGameObjectWithTag("PodiumParticle");
+
+            podiumParticle.transform.position = new Vector3(podiumParticle.transform.position.x, podiumParticle.transform.position.y, other.transform.position.z);
+
+            foreach (var componentsInChild in podiumParticle.GetComponentsInChildren<ParticleSystem>())
+            {
+                componentsInChild.Play();
+            }
+        
             GameManager.Instance.LevelCompleted();
         }
     }

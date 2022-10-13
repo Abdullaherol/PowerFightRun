@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 6208062478467959118}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.37, y: 2.44, z: 46.69886}
-  m_LocalScale: {x: 2.5, y: 2, z: 1.3}
+  m_LocalScale: {x: 3, y: 3, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6208062478467994984}
@@ -197,3 +197,4 @@ MonoBehaviour:
   damage: 3
   speed: 25
   time: 2
+  direction: {x: 0, y: 0, z: 0}

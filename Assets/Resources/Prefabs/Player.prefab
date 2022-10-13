@@ -1200,7 +1200,7 @@ MonoBehaviour:
   weaponParent: {fileID: 801087522574864631}
   currentWeapon: {fileID: 0}
   weapon: {fileID: 0}
-  particleChangeWeapon: {fileID: 4925473684954553928}
+  particleDoor: {fileID: 4925473684954553928}
   animatorParent: {fileID: 6491651829329919697}
   animatorCharacter: {fileID: 7295365308128354679}
 --- !u!95 &6491651829329919697

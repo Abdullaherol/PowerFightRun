@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lofelt.NiceVibrations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -74,7 +75,7 @@ public class GameManager : MonoBehaviour
     public void LevelCompleted()
     {
         gameStarted = false;
-        
+
         _levelCompletedUI.ShowUI();
     }
 
@@ -118,6 +119,8 @@ public class GameManager : MonoBehaviour
         money += amount;
 
         PlayerPrefs.SetInt("Money", money);
+        
+        GameManager.Instance.Vibrate();
 
         _moneyText.UpdateText();
     }
@@ -136,6 +139,11 @@ public class GameManager : MonoBehaviour
         if (onPodium)
             _currentTimePodium += Time.deltaTime;
 
-        Debug.Log("Total: "+_currentTimeTotal.ToString("F")+"  Podium: "+_currentTimePodium.ToString("F"));
+        Debug.Log("Total: " + _currentTimeTotal.ToString("F") + "  Podium: " + _currentTimePodium.ToString("F"));
+    }
+
+    public void Vibrate()
+    {
+        HapticPatterns.PlayConstant(.15f, 0.0f, .05f);
     }
 }

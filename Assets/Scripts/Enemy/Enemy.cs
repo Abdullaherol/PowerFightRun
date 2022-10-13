@@ -85,9 +85,7 @@ public class Enemy : MonoBehaviour
         particleDestroy.Play();
         
         money.transform.parent = null;
-        money.GetComponent<BoxCollider>().isTrigger = false;
         money.GetComponent<Rigidbody>().useGravity = true;
-        money.transform.eulerAngles = Vector3.zero;
         money.SetActive(true);
         
         Destroy(gameObject);

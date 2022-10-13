@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
-    
+
     public int playerCount;
     public GameObject prefab;
     public Transform moveParent;
@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        var count = /*DoorManager.Instance.GetMaxPlayerCount()*/  + 10;
+        var count = /*DoorManager.Instance.GetMaxPlayerCount()*/ +10;
 
         if (playerPositions.Count != count)
             Debug.LogWarning("PlayerManager: Maximum oyuncu sayısı ile oyuncu pozisyon sayıları uyuşmuyor.");
@@ -39,10 +39,10 @@ public class PlayerManager : MonoBehaviour
             playerPool.Add(player);
         }
 
-        IncreasePlayer(true);
+        IncreasePlayer();
     }
 
-    public void IncreasePlayer(bool playParticle)
+    public void IncreasePlayer()
     {
         var player = playerPool[^1];
 
@@ -50,11 +50,13 @@ public class PlayerManager : MonoBehaviour
 
         player.SetActive(true);
         player.transform.parent = moveParent;
-        player.transform.localPosition = (players.Count > 0) ? players[^1].transform.localPosition : playerPositions[0].playerPositions[0];
+        player.transform.localPosition = (players.Count > 0)
+            ? players[^1].transform.localPosition
+            : playerPositions[0].playerPositions[0];
 
         players.Add(player);
-        
-        player.GetComponent<Player>().ChangeWeapon(ThrowManager.Instance.currentWeapon,playParticle);
+
+        player.GetComponent<Player>().ChangeWeapon(ThrowManager.Instance.currentWeapon);
 
         _currentTime = 0;
 
@@ -86,9 +88,9 @@ public class PlayerManager : MonoBehaviour
         if (players.Count > 0)
         {
             var player = players[^1];
-            
+
             players.Remove(player);
-            
+
             playerPool.Add(player);
             player.SetActive(false);
             player.transform.parent = null;
@@ -110,7 +112,7 @@ public class PlayerManager : MonoBehaviour
             for (int i = 0; i < players.Count; i++)
             {
                 var player = players[i];
-                var position = playerPositions[playerCount-1].playerPositions[i];
+                var position = playerPositions[playerCount - 1].playerPositions[i];
 
                 float t = _currentTime / moveTime;
 
@@ -120,15 +122,26 @@ public class PlayerManager : MonoBehaviour
             _currentTime += Time.deltaTime;
         }
     }
-    
+
     public void UpdatePlayersWeapons(ThrowWeapon weapon)
     {
         for (int i = 0; i < players.Count; i++)
         {
             var p = players[i];
             var player = p.GetComponent<Player>();
-            
-            player.ChangeWeapon(weapon,true);
+
+            player.ChangeWeapon(weapon);
+        }
+    }
+
+    public void PlayPlayerParticle()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            var p = players[i];
+            var player = p.GetComponent<Player>();
+
+            player.particleDoor.Play();
         }
     }
 }

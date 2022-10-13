@@ -9,6 +9,8 @@ public class ThrowBullet : MonoBehaviour
     public float speed;
     public float time;
 
+    [HideInInspector] public Vector3 direction;
+
     private float _currentTime;
     
     private void Update()
@@ -17,7 +19,7 @@ public class ThrowBullet : MonoBehaviour
         {
             _currentTime += Time.deltaTime;
 
-            transform.position += transform.forward * (speed * Time.deltaTime);
+            transform.position += direction * (speed * Time.deltaTime);
         }
         else
         {

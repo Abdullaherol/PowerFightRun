@@ -5,11 +5,11 @@ public class Player : MonoBehaviour
     public Transform weaponParent;
     public GameObject currentWeapon;
     public ThrowWeapon weapon;
-    public ParticleSystem particleChangeWeapon;
+    public ParticleSystem particleDoor;
     public Animator animatorParent;
     public Animator animatorCharacter;
 
-    public void ChangeWeapon(ThrowWeapon throwWeapon, bool playParticle)
+    public void ChangeWeapon(ThrowWeapon throwWeapon)
     {
         if (currentWeapon != null)
         {
@@ -17,9 +17,6 @@ public class Player : MonoBehaviour
                 Destroy(currentWeapon);
             else return;
         }
-
-        if (playParticle)
-            particleChangeWeapon.Play();
         
         animatorParent.Play("ChangeWeapon");
 

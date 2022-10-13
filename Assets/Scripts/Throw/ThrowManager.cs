@@ -11,9 +11,8 @@ public class ThrowManager : MonoBehaviour
 
     [Space, Header("Test Data")] public int playerCount;
     public int bulletCount;
-    
-    [Space]
-    public ThrowWeapon currentWeapon;
+
+    [Space] public ThrowWeapon currentWeapon;
     public ThrowUpgrade upgrade;
 
     [Space, Header("Bullet")] public ParticleSystem bulletCollisionParticle;
@@ -31,15 +30,15 @@ public class ThrowManager : MonoBehaviour
     private void Start()
     {
         RefreshUpgrade();
-        
+
         _playerManager = PlayerManager.Instance;
     }
 
     private void Update()
     {
-        if(!_shot || GameManager.Instance.failed || !GameManager.Instance.gameStarted) return;
-        
-        if(currentWeapon==null) return;
+        if (!_shot || GameManager.Instance.failed || !GameManager.Instance.gameStarted) return;
+
+        if (currentWeapon == null) return;
 
         var boostValue = BoostManager.Instance.boostValue;
 
@@ -51,22 +50,27 @@ public class ThrowManager : MonoBehaviour
         {
             if (upgrade.bulletCount + boostValue.bullet >= currentWeapon.settings.Count)
                 upgrade.bulletCount = currentWeapon.settings.Count;
-            else if(upgrade.bulletCount < 1)
+            else if (upgrade.bulletCount < 1)
                 upgrade.bulletCount = 1;
-            
-            
-            foreach (var playerPosition in _playerManager.playerPositions[_playerManager.playerCount-1].playerPositions)
+
+
+            foreach (var playerPosition in _playerManager.playerPositions[_playerManager.playerCount - 1]
+                         .playerPositions)
             {
                 var position = _playerManager.moveParent.transform.position + playerPosition;
-            
-                foreach (var weaponDirection in currentWeapon.settings[upgrade.bulletCount-1].directions)
+
+                foreach (var weaponDirection in currentWeapon.settings[upgrade.bulletCount - 1].directions)
                 {
                     var spawnPoint = position + weaponDirection.position;
                     var bullet = Instantiate(currentWeapon.bullet);
                     bullet.transform.position = spawnPoint;
-                    bullet.transform.LookAt(spawnPoint + weaponDirection.direction + new Vector3(Random.Range(-currentWeapon.spread,currentWeapon.spread),0,0));
+                    bullet.GetComponent<ThrowBullet>().direction = weaponDirection.direction
+                                                                   + new Vector3(
+                                                                       Random.Range(-currentWeapon.spread,
+                                                                           currentWeapon.spread), 0, 0);
                 }
             }
+
             _currentTime = 0;
         }
     }
@@ -74,7 +78,7 @@ public class ThrowManager : MonoBehaviour
     public void Shot(bool shot)
     {
         _shot = shot;
-        
+
         if (!shot)
             _currentTime = 0;
     }
@@ -84,16 +88,16 @@ public class ThrowManager : MonoBehaviour
         try
         {
             PlayerManager playerManager = GameObject.FindObjectOfType<PlayerManager>();
-            
-            foreach (var playerPosition in playerManager.playerPositions[playerCount-1].playerPositions)
+
+            foreach (var playerPosition in playerManager.playerPositions[playerCount - 1].playerPositions)
             {
                 var position = playerManager.moveParent.transform.position + playerPosition;
-                foreach (var weaponDirection in currentWeapon.settings[bulletCount-1].directions)
+                foreach (var weaponDirection in currentWeapon.settings[bulletCount - 1].directions)
                 {
                     var spawnPoint = position + weaponDirection.position;
-                
-                    Debug.DrawLine(playerManager.moveParent.transform.position,position,Color.green);
-                    Debug.DrawLine(spawnPoint,spawnPoint + weaponDirection.direction,Color.red);
+
+                    Debug.DrawLine(playerManager.moveParent.transform.position, position, Color.green);
+                    Debug.DrawLine(spawnPoint, spawnPoint + weaponDirection.direction, Color.red);
                 }
             }
         }
@@ -108,17 +112,19 @@ public class ThrowManager : MonoBehaviour
 
         _currentTime = weapon.weapon.fireRate;
 
+        GameManager.Instance.Vibrate();
+
         RefreshUpgrade();
-        
+
         _playerManager.UpdatePlayersWeapons(weapon.weapon);
     }
-    
+
     public void ChangeWeapon(ThrowWeapon weapon)
     {
         currentWeapon = weapon;
 
         RefreshUpgrade();
-        
+
         _playerManager.UpdatePlayersWeapons(weapon);
     }
 

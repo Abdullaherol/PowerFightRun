@@ -12,7 +12,7 @@ public class PlayerManagerEditor : Editor
 
         if (GUILayout.Button("Increase Player"))
         {
-            playerManager.IncreasePlayer(true);
+            playerManager.IncreasePlayer();
         }
 
         if (playerManager.playerCount > 1 && GUILayout.Button("Decrease Player"))

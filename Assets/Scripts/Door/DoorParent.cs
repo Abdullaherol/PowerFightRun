@@ -99,6 +99,13 @@ public class DoorParent : MonoBehaviour
         var weapon = (left) ? leftWeapon : rightWeapon;
         var boostType = (left) ? leftBoostType : rightBoostType;
 
+        if (DoorManager.Instance.IsPositiveDoor(type))
+        {
+            PlayerManager.Instance.PlayPlayerParticle();
+        }
+
+        GameManager.Instance.Vibrate();
+
         if (type == DoorType.IncreaseFireRate)
         {
             ThrowManager.Instance.upgrade.fireRate -= value;
@@ -122,7 +129,7 @@ public class DoorParent : MonoBehaviour
         }
         else if (type == DoorType.IncreasePlayer)
         {
-            PlayerManager.Instance.IncreasePlayer(true);
+            PlayerManager.Instance.IncreasePlayer();
         }
         else if (type == DoorType.DecreasePlayer)
         {
@@ -130,7 +137,7 @@ public class DoorParent : MonoBehaviour
         }
         else if (type == DoorType.Boost)
         {
-            BoostManager.Instance.Boost(boostType,value);
+            BoostManager.Instance.Boost(boostType, value);
         }
 
         DeActivateDoors();

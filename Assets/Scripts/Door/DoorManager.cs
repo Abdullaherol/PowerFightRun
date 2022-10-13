@@ -60,6 +60,14 @@ public class DoorManager : MonoBehaviour
             ? doorSetting.increaseBodyColor
             : doorSetting.DecreaseBodyColor;
     }
+    
+    public bool IsPositiveDoor(DoorType type)
+    {
+        return (type == DoorType.ChangeWeapon || type == DoorType.IncreaseBullet || type == DoorType.IncreasePlayer ||
+                type == DoorType.IncreaseFireRate || type == DoorType.IncreaseDistance)
+            ? true
+            : false;
+    }
 
     public bool IsImageDoor(DoorType type)
     {

@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int money;
     public int level;
     public int fakeLevel;
+    public bool onPodium;
 
     [Space, Header("Enemy Setting")] public float enemyDeleteTime;
     public Gradient enemyDeadGradient;
@@ -21,19 +22,22 @@ public class GameManager : MonoBehaviour
 
     [Space, Header("Collectable Settings")]
     public ParticleSystem collectableGroundParticle;
-    
+
     private GameOverUI _gameOverUI;
     private MoneyText _moneyText;
     private LevelCompletedUI _levelCompletedUI;
 
     private List<ThrowWeapon> _weapons = new List<ThrowWeapon>();
 
+    private float _currentTimeTotal;
+    private float _currentTimePodium;
+
     private void Awake()
     {
         Application.targetFrameRate = 60;
-        
+
         Instance = this;
-        
+
         GetSettings();
     }
 
@@ -69,6 +73,8 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
+        gameStarted = false;
+        
         _levelCompletedUI.ShowUI();
     }
 
@@ -84,15 +90,15 @@ public class GameManager : MonoBehaviour
         }
 
         SaveSettings();
-        
+
         LoadScene();
     }
 
     private void SaveSettings()
     {
-        PlayerPrefs.SetInt("FakeLevel",fakeLevel);
-        PlayerPrefs.SetInt("Money",money);
-        PlayerPrefs.SetInt("Level",level);
+        PlayerPrefs.SetInt("FakeLevel", fakeLevel);
+        PlayerPrefs.SetInt("Money", money);
+        PlayerPrefs.SetInt("Level", level);
     }
 
     private void GetSettings()
@@ -110,14 +116,26 @@ public class GameManager : MonoBehaviour
     public void AddMoney(int amount)
     {
         money += amount;
-        
-        PlayerPrefs.SetInt("Money",money);
-        
+
+        PlayerPrefs.SetInt("Money", money);
+
         _moneyText.UpdateText();
     }
 
     public void StartGame()
     {
         gameStarted = true;
+    }
+
+    private void Update()
+    {
+        if (!gameStarted) return;
+
+        _currentTimeTotal += Time.deltaTime;
+
+        if (onPodium)
+            _currentTimePodium += Time.deltaTime;
+
+        Debug.Log("Total: "+_currentTimePodium.ToString("F")+"  Podium: "+_currentTimePodium.ToString("F"));
     }
 }

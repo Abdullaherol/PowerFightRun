@@ -55,6 +55,8 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyTag == "PodiumEnemy")
         {
+            GameManager.Instance.onPodium = true;
+            
             GameManager.Instance.LevelCompleted();
         }
     }

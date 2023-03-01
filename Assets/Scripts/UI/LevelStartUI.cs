@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LevelStartUI : MonoBehaviour
 {
+    private GameManager _gameManager;
+
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+    }
+
     public void StartGame()
     {
-        GameManager.Instance.StartGame();
+        _gameManager.StartGame();
     }
 }

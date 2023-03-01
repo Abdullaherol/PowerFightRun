@@ -9,12 +9,23 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public bool failed;
-    public bool gameStarted;
     public int money;
     public int level;
     public int fakeLevel;
     public bool onPodium;
+    
+    //Handlers
+    public delegate void OnFailedHandler();
+    public delegate void OnGameStartedHandler();
+    public delegate void OnLevelCompletedHandler();
+    //Handlers
+    
+    //Events
+    public event OnFailedHandler OnFailed;
+    public event OnGameStartedHandler OnGameStarted;
+    public event OnLevelCompletedHandler OnLevelCompleted;
+    //Events
+    
 
     [Space, Header("Enemy Setting")] public float enemyDeleteTime;
     public Gradient enemyDeadGradient;
@@ -24,7 +35,6 @@ public class GameManager : MonoBehaviour
     [Space, Header("Collectable Settings")]
     public ParticleSystem collectableGroundParticle;
 
-    private GameOverUI _gameOverUI;
     private MoneyText _moneyText;
     private LevelCompletedUI _levelCompletedUI;
 
@@ -42,11 +52,6 @@ public class GameManager : MonoBehaviour
         GetSettings();
     }
 
-    private void GetWeaponsFromAssets()
-    {
-        _weapons = Resources.LoadAll<ThrowWeapon>("Weapons").ToList();
-    }
-
     public ThrowWeapon GetRandomWeapon(ThrowWeapon currentWeapon)
     {
         List<ThrowWeapon> weapons = new List<ThrowWeapon>(_weapons);
@@ -56,15 +61,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _gameOverUI = GameObject.FindObjectOfType<GameOverUI>();
         _moneyText = GameObject.FindObjectOfType<MoneyText>();
         _levelCompletedUI = GameObject.FindObjectOfType<LevelCompletedUI>();
     }
 
     public void GameOver()
     {
-        failed = true;
-        _gameOverUI.ShowUI();
+        OnFailed?.Invoke();
     }
 
     public void ReTry()
@@ -74,9 +77,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelCompleted()
     {
-        gameStarted = false;
-
-        _levelCompletedUI.ShowUI();
+        OnLevelCompleted?.Invoke();
     }
 
     public void NextLevel()
@@ -120,26 +121,14 @@ public class GameManager : MonoBehaviour
 
         PlayerPrefs.SetInt("Money", money);
         
-        GameManager.Instance.Vibrate();
+        Vibrate();
 
         _moneyText.UpdateText();
     }
 
     public void StartGame()
     {
-        gameStarted = true;
-    }
-
-    private void Update()
-    {
-        if (!gameStarted) return;
-
-        _currentTimeTotal += Time.deltaTime;
-
-        if (onPodium)
-            _currentTimePodium += Time.deltaTime;
-
-        Debug.Log("Total: " + _currentTimeTotal.ToString("F") + "  Podium: " + _currentTimePodium.ToString("F"));
+        OnGameStarted?.Invoke();
     }
 
     public void Vibrate()

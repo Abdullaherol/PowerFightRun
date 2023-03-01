@@ -10,7 +10,7 @@ public class ThrowManager : MonoBehaviour
     public static ThrowManager Instance;
 
     [Space, Header("Test Data")] public int playerCount;
-    public int bulletCount;
+    [SerializeField] private int bulletCount;
 
     [Space] public ThrowWeapon currentWeapon;
     public ThrowUpgrade upgrade;
@@ -19,8 +19,14 @@ public class ThrowManager : MonoBehaviour
 
     private float _currentTime;
     private bool _shot;
+    private bool _failed;
+    private bool _gameStarted;
 
+    private BoostManager _boostManager;
     private PlayerManager _playerManager;
+    private GameManager _gameManager;
+
+    private Dictionary<ThrowWeapon, GameObject> _bulletPool = new Dictionary<ThrowWeapon, GameObject>();
 
     private void Awake()
     {
@@ -31,16 +37,31 @@ public class ThrowManager : MonoBehaviour
     {
         RefreshUpgrade();
 
+        _gameManager = GameManager.Instance;
         _playerManager = PlayerManager.Instance;
+        _boostManager = BoostManager.Instance;
+
+        _gameManager.OnFailed += OnFailed;
+        _gameManager.OnGameStarted += OnGameStarted;
+    }
+
+    private void OnFailed()
+    {
+        _failed = true;
+    }
+
+    private void OnGameStarted()
+    {
+        _gameStarted = true;
     }
 
     private void Update()
     {
-        if (!_shot || GameManager.Instance.failed || !GameManager.Instance.gameStarted) return;
+        if (!_shot || _failed || !_gameStarted) return;
 
         if (currentWeapon == null) return;
 
-        var boostValue = BoostManager.Instance.boostValue;
+        var boostValue = _boostManager.boostValue;
 
         if (_currentTime < upgrade.fireRate + boostValue.fireRate)
         {
@@ -49,9 +70,13 @@ public class ThrowManager : MonoBehaviour
         else
         {
             if (upgrade.bulletCount + boostValue.bullet >= currentWeapon.settings.Count)
+            {
                 upgrade.bulletCount = currentWeapon.settings.Count;
+            }
             else if (upgrade.bulletCount < 1)
+            {
                 upgrade.bulletCount = 1;
+            }
 
 
             foreach (var playerPosition in _playerManager.playerPositions[_playerManager.playerCount - 1]
@@ -62,7 +87,7 @@ public class ThrowManager : MonoBehaviour
                 foreach (var weaponDirection in currentWeapon.settings[upgrade.bulletCount - 1].directions)
                 {
                     var spawnPoint = position + weaponDirection.position;
-                    var bullet = Instantiate(currentWeapon.bullet);
+                    var bullet = GetBullet();
                     bullet.transform.position = spawnPoint;
                     bullet.GetComponent<ThrowBullet>().direction = weaponDirection.direction
                                                                    + new Vector3(
@@ -87,7 +112,7 @@ public class ThrowManager : MonoBehaviour
     {
         try
         {
-            PlayerManager playerManager = GameObject.FindObjectOfType<PlayerManager>();
+            var playerManager = FindObjectOfType<PlayerManager>();
 
             foreach (var playerPosition in playerManager.playerPositions[playerCount - 1].playerPositions)
             {
@@ -103,6 +128,7 @@ public class ThrowManager : MonoBehaviour
         }
         catch (ArgumentOutOfRangeException e)
         {
+            Debug.Log("Editor error on drawing gizmos");
         }
     }
 
@@ -112,7 +138,7 @@ public class ThrowManager : MonoBehaviour
 
         _currentTime = weapon.weapon.fireRate;
 
-        GameManager.Instance.Vibrate();
+        _gameManager.Vibrate();
 
         RefreshUpgrade();
 
@@ -132,5 +158,35 @@ public class ThrowManager : MonoBehaviour
     {
         upgrade.fireRate = currentWeapon.fireRate;
         upgrade.time = currentWeapon.bullet.GetComponent<ThrowBullet>().time;
+    }
+
+    public GameObject GetBullet()
+    {
+        if (_bulletPool.ContainsKey(currentWeapon))
+        {
+            var bullet = _bulletPool[currentWeapon];
+            _bulletPool.Remove(currentWeapon);
+
+            var throwB = bullet.GetComponent<ThrowBullet>();
+            throwB.weapon = currentWeapon;
+            throwB.ReShot();
+
+            return bullet;
+        }
+        else
+        {
+            var bulletInstantiated = Instantiate(currentWeapon.bullet);
+            var throwBullet = bulletInstantiated.GetComponent<ThrowBullet>();
+            throwBullet.weapon = currentWeapon;
+
+            return bulletInstantiated;
+        }
+    }
+
+    public void AddBullet(GameObject bullet, ThrowWeapon weapon)
+    {
+        bullet.SetActive(false);
+
+        _bulletPool.Add(weapon, bullet);
     }
 }

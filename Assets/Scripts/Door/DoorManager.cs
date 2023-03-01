@@ -15,31 +15,11 @@ public class DoorManager : MonoBehaviour
         Instance = this;
     }
 
-    // private void Start()
-    // {
-    //     foreach (var doorParent in doors)
-    //     {
-    //         doorParent.RefreshDoor(this);
-    //     }
-    // }
-
     public string GetTypeText(DoorType type)
     {
         return doorSetting.typeSettings.FirstOrDefault(x => x.type == type).text;
     }
-
-    public int GetMaxPlayerCount()
-    {
-        int count = 0;
-
-        foreach (var doorParent in doors)
-        {
-            count += doorParent.GetMaxPlayerCount();
-        }
-
-        return count;
-    }
-
+    
     public string GetTitle(DoorType type)
     {
         return doorSetting.typeSettings.FirstOrDefault(x => x.type == type).title;

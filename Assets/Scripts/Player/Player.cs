@@ -1,33 +1,39 @@
 ﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IEntity
 {
-    public Transform weaponParent;
-    public GameObject currentWeapon;
-    public ThrowWeapon weapon;
     public ParticleSystem particleDoor;
-    public Animator animatorParent;
     public Animator animatorCharacter;
+    
+    [SerializeField] private Transform _weaponParent;
+    [SerializeField] private GameObject _currentWeapon;
+    [SerializeField] private ThrowWeapon _weapon;
+    [SerializeField] private Animator _animatorParent;
 
     public void ChangeWeapon(ThrowWeapon throwWeapon)
     {
-        if (currentWeapon != null)
+        if (_currentWeapon != null)
         {
-            if (weapon != throwWeapon)
-                Destroy(currentWeapon);
+            if (_weapon != throwWeapon)
+                Destroy(_currentWeapon);
             else return;
         }
         
-        animatorParent.Play("ChangeWeapon");
+        _animatorParent.Play("ChangeWeapon");
 
         var weaponTransform = Instantiate(throwWeapon.prefab).transform;
 
-        weaponTransform.parent = weaponParent;
+        weaponTransform.parent = _weaponParent;
         weaponTransform.localPosition = throwWeapon.position;
         weaponTransform.localEulerAngles = throwWeapon.rotation;
         weaponTransform.localScale = throwWeapon.scale;
 
-        currentWeapon = weaponTransform.gameObject;
-        weapon = throwWeapon;
+        _currentWeapon = weaponTransform.gameObject;
+        _weapon = throwWeapon;
+    }
+
+    public EntityType GetEntityType()
+    {
+        return EntityType.Player;
     }
 }

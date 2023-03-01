@@ -11,6 +11,7 @@ public class DoorChild : MonoBehaviour
     public TMPro.TextMeshProUGUI text;
     public Image bodyImage;
     public Image image;
+    public IDoorType type;
 
     private DoorParent _parent;
     

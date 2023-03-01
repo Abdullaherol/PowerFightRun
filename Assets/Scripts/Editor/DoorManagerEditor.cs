@@ -8,13 +8,11 @@ public class DoorManagerEditor : Editor
     {
         base.OnInspectorGUI();
         
-        DoorManager doorManager = (DoorManager)target;
-
         if (GUILayout.Button("Refresh Doors"))
         {
-            foreach (var door in GameObject.FindObjectsOfType<DoorParent>())
+            foreach (var door in FindObjectsOfType<DoorParent>())
             {
-                door.RefreshDoor(doorManager);
+                door.RefreshDoor();
             }
         }
     }

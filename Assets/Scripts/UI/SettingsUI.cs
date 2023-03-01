@@ -1,43 +1,38 @@
-﻿using System;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class SettingsUI : MonoBehaviour
 {
-    public GameObject panel;
-    public Button soundBtn;
-    public Button vibrationBtn;
-    public TMPro.TextMeshProUGUI soundText;
-    public TMPro.TextMeshProUGUI vibrationText;
-    public bool sound;
-    public bool vibration;
+    [SerializeField] private GameObject _panel;
+    [SerializeField] private TMPro.TextMeshProUGUI _soundText;
+    [SerializeField] private TMPro.TextMeshProUGUI _vibrationText;
+    [SerializeField] private bool _sound;
+    [SerializeField] private bool _vibration;
 
     private void Start()
     {
-        sound = (PlayerPrefs.GetInt("Sound", 1) == 1) ? true : false;
-        vibration = (PlayerPrefs.GetInt("Vibration", 1) == 1) ? true : false;
+        _sound = (PlayerPrefs.GetInt("Sound", 1) == 1) ? true : false;
+        _vibration = (PlayerPrefs.GetInt("Vibration", 1) == 1) ? true : false;
     }
 
     public void ChangeSound()
     {
-        sound = !sound;
-        soundText.text = (sound) ? "On" : "Off";
+        _sound = !_sound;
+        _soundText.text = (_sound) ? "On" : "Off";
     }
 
     public void ChangeVibration()
     {
-        vibration = !vibration;
-        vibrationText.text = (vibration) ? "On" : "Off";
+        _vibration = !_vibration;
+        _vibrationText.text = (_vibration) ? "On" : "Off";
     }
 
     public void ShowSettings()
     {
-        panel.SetActive(true);
+        _panel.SetActive(true);
     }
 
     public void HideSettings()
     {
-        panel.SetActive(false);
+        _panel.SetActive(false);
     }
 }

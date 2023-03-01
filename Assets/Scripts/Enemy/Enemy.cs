@@ -13,18 +13,24 @@ public class Enemy : MonoBehaviour
     public ParticleSystem particleDead;
     public ParticleSystem particleDestroy;
 
+    private GameManager _gameManager;
+
     void Start()
     {
+        _gameManager = GameManager.Instance;
+        
         text.text = health.ToString();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        var enemyTag = gameObject.tag;
+        var enemyTag = GetComponent<IEntity>().GetEntityType();
+
+        var triggerTag = other.GetComponent<IEntity>().GetEntityType();
         
-        if (other.CompareTag("Bullet"))
+        if (triggerTag == EntityType.Bullet)
         {
-            ThrowBullet bullet = other.GetComponent<ThrowBullet>();
+            var bullet = other.GetComponent<ThrowBullet>();
 
             if (health - bullet.damage <= 0)
             {
@@ -33,9 +39,9 @@ public class Enemy : MonoBehaviour
                 particleDead.transform.parent = null;
                 particleDead.Play();
                 
-                this.enabled = false;
+                enabled = false;
 
-                StartCoroutine(DeleteEnemey());
+                StartCoroutine(DeleteEnemy());
             }
             else
             {
@@ -47,19 +53,19 @@ public class Enemy : MonoBehaviour
 
             text.text = health.ToString();
 
-            if (enemyTag == "PodiumEnemy")
+            if (enemyTag == EntityType.PodiumEnemy)
             {
-                GameManager.Instance.onPodium = true;
+                _gameManager.onPodium = true;
             } 
         }
 
-        if (!other.CompareTag("Player")) return;
+        if (triggerTag != EntityType.Player) return;
 
-        if (enemyTag == "Enemy")
+        if (enemyTag == EntityType.Enemy)
         {
-            GameManager.Instance.GameOver();
+            _gameManager.GameOver();
         }
-        else if (enemyTag == "PodiumEnemy")
+        else if (enemyTag == EntityType.PodiumEnemy)
         {
             var podiumParticle = GameObject.FindGameObjectWithTag("PodiumParticle");
 
@@ -70,20 +76,20 @@ public class Enemy : MonoBehaviour
                 componentsInChild.Play();
             }
         
-            GameManager.Instance.LevelCompleted();
+            _gameManager.LevelCompleted();
         }
     }
 
-    private IEnumerator DeleteEnemey()
+    private IEnumerator DeleteEnemy()
     {
         var skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         var materials = skinnedMeshRenderer.materials;
         
         float currentTime = 0;
-        while (currentTime < GameManager.Instance.enemyDeleteTime)
+        while (currentTime < _gameManager.enemyDeleteTime)
         {
-            float t = currentTime / GameManager.Instance.enemyDeleteTime;
-            materials[0].color = GameManager.Instance.enemyDeadGradient.Evaluate(t);
+            var t = currentTime / _gameManager.enemyDeleteTime;
+            materials[0].color = _gameManager.enemyDeadGradient.Evaluate(t);
             currentTime += Time.deltaTime;
             
             yield return new WaitForEndOfFrame();

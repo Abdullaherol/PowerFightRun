@@ -30,26 +30,12 @@ public class BoostManager : MonoBehaviour
         }
     }
 
-    public void Boost(DoorBoostType type,float value)
+    public void Boost(IBoostDoorType type,float value)
     {
-        currentBoost = type;
+        currentBoost = type.GetBoostType();
         _currentTime = 0;
-        time = setting.settings.FirstOrDefault(x => x.type == type).time;
+        time = setting.boosts.First(x => x.type == currentBoost).time;
         
-        if (currentBoost == DoorBoostType.Bullet)
-        {
-            boostValue.bullet += (int)value;
-        }
-        else if (currentBoost == DoorBoostType.Distance)
-        {
-            boostValue.distance = value;
-        }
-        else if (currentBoost == DoorBoostType.FireRate)
-        {
-            boostValue.fireRate = value;
-        }
-        else if (currentBoost == DoorBoostType.AutoCollectMoney)
-        {
-        }
+        type.ApplyEffect();
     }
 }

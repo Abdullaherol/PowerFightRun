@@ -1,16 +1,31 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LevelCompletedUI : MonoBehaviour
 {
-    public GameObject panel;
+    [SerializeField] private GameObject panel;
 
-    public void ShowUI()
+    private GameManager _gameManager;
+    
+    private void Start()
+    {
+        _gameManager = GameManager.Instance;
+
+        _gameManager.OnLevelCompleted += OnLevelCompleted;
+    }
+
+    private void OnLevelCompleted()
+    {
+        ShowUI();
+    }
+
+    private void ShowUI()
     {
         panel.SetActive(true);
     }
 
     public void NextLevel()
     {
-        GameManager.Instance.NextLevel();
+        _gameManager.NextLevel();
     }
 }

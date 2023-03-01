@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PodiumHelper : MonoBehaviour
+public class PodiumHelper : MonoBehaviour //This class for editor usage.
 {
-    public GameObject prefab;
+    [SerializeField] private GameObject prefab;
 
-    public Transform parent;
+    [SerializeField] private Transform parent;
     
-    public Vector3 space;
-    public List<int> line = new List<int>();
+    [SerializeField] private Vector3 space;
+    [SerializeField] private List<int> line = new List<int>();
 
-    public List<GameObject> enemies = new List<GameObject>();
+    [SerializeField] private List<GameObject> enemies = new List<GameObject>();
 
     public void Spawn()
     {

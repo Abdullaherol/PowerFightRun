@@ -6,10 +6,9 @@ public class PodiumHelperEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-            
         base.OnInspectorGUI();
 
-        PodiumHelper podiumHelper = (PodiumHelper)target;
+        var podiumHelper = (PodiumHelper)target;
         
         if (GUILayout.Button("Spawn"))
         {

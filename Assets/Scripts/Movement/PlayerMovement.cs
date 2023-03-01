@@ -16,16 +16,30 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _lastMousePosition;
 
     private float _speedZ;
+    private bool _failed;
+    private bool _gameStarted;
 
     private void Start()
     {
+        GameManager.Instance.OnFailed += OnFailed;
+        GameManager.Instance.OnGameStarted += OnGameStarted;
+        
         camera.transform.position =
             new Vector3(0, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z);
     }
 
+    private void OnFailed()
+    {
+        _failed = true;
+    }
+    private void OnGameStarted()
+    {
+        _gameStarted = true;
+    }
+
     void Update()
     {
-        if(GameManager.Instance.failed || !GameManager.Instance.gameStarted) return;
+        if(_failed || !_gameStarted) return;
         
         var nextPosition = new Vector3(0,transform.position.y,_speedZ);
         
